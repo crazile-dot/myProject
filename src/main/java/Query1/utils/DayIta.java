@@ -3,7 +3,7 @@ package Query1.utils;
 import org.joda.time.DateTime;
 import java.io.Serializable;
 
-public class Day_Ita implements Serializable {
+public class DayIta implements Serializable {
 
     private DateTime date;
     private String state;
@@ -22,10 +22,10 @@ public class Day_Ita implements Serializable {
     private String itaNotes;
     private String engNotes;
 
-    public Day_Ita(DateTime date, String state, int hospitalizedWithSymptoms, int intensiveCare,
-                   int totalHospedalized, int homeIsolation, int totalConfirmed, int totalConfirmedVariance,
-                   int newConfirmed, int healedDischarged, int deceased, int totalCases, int swabs,
-                   int testedCases, String itaNotes, String engNotes) {
+    public DayIta(DateTime date, String state, int hospitalizedWithSymptoms, int intensiveCare,
+                  int totalHospedalized, int homeIsolation, int totalConfirmed, int totalConfirmedVariance,
+                  int newConfirmed, int healedDischarged, int deceased, int totalCases, int swabs,
+                  int testedCases, String itaNotes, String engNotes) {
 
         this.date = date;
         this.state = state;
@@ -45,9 +45,9 @@ public class Day_Ita implements Serializable {
         this.engNotes = engNotes;
     }
 
-    public Day_Ita(DateTime date, String state, int hospitalizedWithSymptoms, int intensiveCare,
-                   int totalHospedalized, int homeIsolation, int totalConfirmed, int totalConfirmedVariance,
-                   int newConfirmed, int healedDischarged, int deceased, int totalCases, int swabs) {
+    public DayIta(DateTime date, String state, int hospitalizedWithSymptoms, int intensiveCare,
+                  int totalHospedalized, int homeIsolation, int totalConfirmed, int totalConfirmedVariance,
+                  int newConfirmed, int healedDischarged, int deceased, int totalCases, int swabs) {
 
         this.date = date;
         this.state = state;

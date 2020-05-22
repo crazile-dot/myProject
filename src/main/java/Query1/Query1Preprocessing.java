@@ -1,35 +1,28 @@
 package Query1;
 
+import Query1.utils.DayIta;
+import Query1.utils.Query1CsvParser;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
-import org.apache.spark.api.java.JavaSparkContext;
-import org.joda.time.DateTime;
 import scala.Tuple2;
-import scala.Tuple3;
-import Query1.utils.CsvParser;
-import Query1.utils.Day_Ita;
-import Query1.utils.TupleGenerator;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Query1Preprocessing {
 
-    public static List<Tuple3<DateTime, Integer, Integer>> preprocessing(JavaRDD<String> origin, JavaSparkContext sc) {
-        //public static JavaPairRDD<Tuple3<DateTime, Integer, Integer>, Long> preprocessing(JavaRDD<String> origin, JavaSparkContext sc) {
+    public static JavaPairRDD<Tuple2<DayIta, DayIta>, Long> preprocessing(JavaRDD<String> rdd, int weekLength) {
 
-        List<String> notAllowedLine = new ArrayList<>();
-        notAllowedLine.add(origin.first());
-        JavaRDD<String> notAllowedRdd = sc.parallelize(notAllowedLine);
-        JavaRDD<String> withoutFirstRow = origin.subtract(notAllowedRdd);
+        JavaPairRDD<String, Long> rddWithIndex = rdd.zipWithIndex();
+        JavaRDD<String> withoutFirstRow = rddWithIndex.filter((Tuple2<String, Long> t) ->
+                t._2() > 0).map(t -> t._1());
 
-        JavaRDD<Day_Ita> values = withoutFirstRow.map(line -> CsvParser.parseCSV(line)).filter(x -> x != null);
-        JavaRDD<Tuple3<DateTime, Integer, Integer>> filteredRdd = values.map(elem ->
-                TupleGenerator.getTuple3(elem));
-        JavaRDD<Tuple3<DateTime, Integer, Integer>> rdd = filteredRdd.sortBy(x -> x._1(), true, 1);
-        //JavaPairRDD<Tuple3<DateTime, Integer, Integer>, Long> rdd = filteredRdd.sortBy(x -> x._1(), true, 1).zipWithIndex();
-        List<Tuple3<DateTime, Integer, Integer>> weekRdd = rdd.collect();
+        JavaRDD<DayIta> values = withoutFirstRow.map(line -> Query1CsvParser.parseCSV(line)).filter(x -> x != null);
+        JavaPairRDD<DayIta, Long> sortedRdd = values.sortBy(x -> x.getDate(), true, 1).zipWithIndex().cache();
+        JavaRDD<DayIta> sunday = sortedRdd.filter(t -> t._2()%weekLength == weekLength-1).map(t -> t._1());
 
-        return weekRdd;
+        JavaPairRDD<Tuple2<DayIta, DayIta>, Long> cartesian = sunday.cartesian(sunday).zipWithIndex();
+        JavaPairRDD<Tuple2<DayIta, DayIta>, Long> needed = cartesian.filter(t -> t._2() == 0 || t._1()._1().getDate().plusDays(weekLength).compareTo(t._1()._2().getDate()) == 0
+                || t._1()._1().getDate().plusDays(weekLength).plusHours(-1).compareTo(t._1()._2().getDate()) == 0).cache();
+
+
+        return needed;
     }
 }

@@ -1,12 +1,14 @@
 package Query1.utils;
 
+import org.apache.spark.api.java.JavaPairRDD;
 import org.joda.time.DateTime;
+import scala.Tuple2;
 
-public class CsvParser {
+public class Query1CsvParser {
 
-    public static Day_Ita parseCSV(String csvLine) {
+    public static DayIta parseCSV(String csvLine) {
 
-        Day_Ita day = null;
+        DayIta day = null;
         String[] csvValues = csvLine.split(",");
 
         DateTime value1 = DateParser.dateTimeParser(csvValues[0]);
@@ -22,18 +24,20 @@ public class CsvParser {
         int value11 = Integer.parseInt(csvValues[10]);
         int value12 = Integer.parseInt(csvValues[11]);
         int value13 = Integer.parseInt(csvValues[12]);
-        //int value14 = Integer.parseInt(csvValues[13]);
-        //String value15 = csvValues[14];
-        //String value16 = csvValues[15];
 
-        day = new Day_Ita(
-                value1, value2, value3, value4, value5, value6, value7, value8, value9, value10, value11, value12, value13
-                // value14,
-                // value15,
-                //value16
+        day = new DayIta(
+                value1, value2, value3, value4, value5, value6, value7,
+                value8, value9, value10, value11, value12, value13
+
         );
 
         return day;
+    }
+
+    public static void makeCsv(JavaPairRDD<DateTime, Double> rdd1, JavaPairRDD<DateTime, Double> rdd2, String output) {
+        //aggiungere un controllo (se esiste già il file, ciao)
+        JavaPairRDD<DateTime, Tuple2<Double, Double>> joinedRdd = rdd1.join(rdd2).sortByKey();
+        joinedRdd.saveAsTextFile(output);
     }
 
 }
