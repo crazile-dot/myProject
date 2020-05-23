@@ -13,7 +13,8 @@ public class Average {
 
         JavaPairRDD<DateTime, Double> healedDischargedRdd = pairRDD.mapToPair(
                 new PairFunction<Tuple2<Tuple2<DayIta, DayIta>, Long>, DateTime, Double>() {
-                    public Tuple2<DateTime, Double> call(Tuple2<Tuple2<DayIta, DayIta>, Long> t) {
+                    @Override
+                    public Tuple2<DateTime, Double> call(Tuple2<Tuple2<DayIta, DayIta>, Long> t) throws Exception{
                         DateTime date = t._1()._2().getDate();
                         double a, b;
                         double mean;
@@ -38,7 +39,8 @@ public class Average {
 
         JavaPairRDD<DateTime, Double> swabsRdd = pairRDD.mapToPair(
                 new PairFunction<Tuple2<Tuple2<DayIta, DayIta>, Long>, DateTime, Double>() {
-                    public Tuple2<DateTime, Double> call(Tuple2<Tuple2<DayIta, DayIta>, Long> t) {
+                    @Override
+                    public Tuple2<DateTime, Double> call(Tuple2<Tuple2<DayIta, DayIta>, Long> t) throws Exception{
                         DateTime date = t._1()._2().getDate();
                         double a, b;
                         double mean;
