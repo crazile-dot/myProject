@@ -1,6 +1,10 @@
 package Query2.util;
 
+import util.DateParser;
+
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Query2CsvParser {
 
@@ -21,6 +25,16 @@ public class Query2CsvParser {
         state = new State(value1, value2, value3, value4, value5, intValues, 0.0);
 
         return state;
+    }
+
+    public static ArrayList<Date> parseDates(String csvLine) throws ParseException {
+        ArrayList<Date> res = new ArrayList<>();
+        String[] csvValues = csvLine.split(",");
+
+        for(int i = 5; i < csvValues.length; i++) {
+            res.add(DateParser.dateParser(csvValues[i]));
+        }
+        return res;
     }
 
 }

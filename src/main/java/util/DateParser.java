@@ -1,8 +1,12 @@
-package Query1.utils;
+package util;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class DateParser {
@@ -13,5 +17,10 @@ public class DateParser {
         DateTimeFormatter dtf = DateTimeFormat.forPattern(pattern);
         DateTime dateTime = dtf.parseDateTime(date);
         return dateTime;
+    }
+
+    public static Date dateParser(String date) throws ParseException {
+        Date myDate =new SimpleDateFormat("MM/dd/yyyy").parse(date);
+        return myDate;
     }
 }

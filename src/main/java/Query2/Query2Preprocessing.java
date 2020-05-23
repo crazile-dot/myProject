@@ -12,11 +12,10 @@ import java.util.List;
 
 public class Query2Preprocessing {
 
-    public static JavaRDD<State> preprocessing(JavaRDD<String> rdd) {
+    public static JavaRDD<State> preprocessing(JavaPairRDD<String, Long> rdd) {
 
         //Tolgo la prima riga del csv cioè i nomi delle colonne
-        JavaPairRDD<String, Long> rddWithIndex = rdd.zipWithIndex();
-        JavaRDD<String> withoutFirstRow = rddWithIndex.filter((Tuple2<String, Long> t) ->
+        JavaRDD<String> withoutFirstRow = rdd.filter((Tuple2<String, Long> t) ->
                 t._2() > 0).map(t -> t._1());
 
         //Parse del csv in oggetti State
