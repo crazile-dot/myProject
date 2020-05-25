@@ -2,12 +2,15 @@ package Query1;
 
 import Query1.util.DayIta;
 import Query1.util.Query1CsvParser;
+import Query1.util.Query1CsvWriter;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.joda.time.DateTime;
 import scala.Tuple2;
+
+import java.io.IOException;
 
 public class Query1Main {
 
@@ -30,7 +33,12 @@ public class Query1Main {
         JavaPairRDD<DateTime, Double> healedDischargedRdd = Average.computeHealedDischargedAverage(rdd, weekLength);
         JavaPairRDD<DateTime, Double> swabsRdd = Average.computeSwabsAverage(rdd, weekLength);
 
-        Query1CsvParser.makeCsv(healedDischargedRdd, swabsRdd, outputFile);
+        try {
+            Query1CsvWriter.makeCsv(healedDischargedRdd, swabsRdd, outputFile);
+        } catch (IOException io) {
+            io.printStackTrace();
+            System.out.println("Errore del file");
+        }
 
         sc.close();
         System.out.println("Time query1: " + (System.currentTimeMillis() - start) + "ms");

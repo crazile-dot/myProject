@@ -1,6 +1,7 @@
 package Query2;
 
 import Query2.util.Query2CsvParser;
+import Query2.util.Query2CsvWriter;
 import Query2.util.State;
 import Query2.util.Statistics;
 import org.apache.spark.SparkConf;
@@ -10,6 +11,7 @@ import org.apache.spark.api.java.JavaSparkContext;
 import scala.Tuple2;
 import scala.Tuple3;
 
+import java.io.IOException;
 import java.util.*;
 
 public class Query2Main {
@@ -17,8 +19,6 @@ public class Query2Main {
     private final static int weekLength = 7;
     private final static String pathToFile = "data/time_series_covid19_confirmed_global.csv";
     private final static String output = "src/main/java/Results/query2_output.csv";
-    private final static String output2 = "src/main/java/Results/query2_output2.csv";
-    private final static String output3 = "src/main/java/Results/query2_output3.csv";
 
     public static void main(String[] args) {
 
@@ -40,8 +40,12 @@ public class Query2Main {
         JavaPairRDD<String, ArrayList<Tuple2<String, Double>>> meanRdd = Statistics.computeAverage(valuesByContinent, weekLength).cache();
         JavaPairRDD<String, ArrayList<Tuple2<String, Double>>> standardDeviationRdd = Statistics.computeStandardDeviation(valuesByContinent, meanRdd, weekLength);
         JavaPairRDD<String, ArrayList<Tuple3<String, Integer, Integer>>> minMaxRdd = Statistics.computeMinMax(valuesByContinent, weekLength);
-
-        Query2CsvParser.makeCsv(meanRdd, standardDeviationRdd, minMaxRdd, output);
+        try {
+            Query2CsvWriter.makeCsv(meanRdd, standardDeviationRdd, minMaxRdd, output);
+        } catch (IOException io) {
+            io.printStackTrace();
+            System.out.println("Errore del file");
+        }
         /*meanRdd.saveAsTextFile(output);
         standardDeviationRdd.saveAsTextFile(output2);
         minMaxRdd.saveAsTextFile(output3);*/

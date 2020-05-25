@@ -34,10 +34,4 @@ public class Query1CsvParser {
         return day;
     }
 
-    public static void makeCsv(JavaPairRDD<DateTime, Double> rdd1, JavaPairRDD<DateTime, Double> rdd2, String output) {
-        //aggiungere un controllo (se esiste già il file, ciao)
-        JavaPairRDD<DateTime, Tuple2<Double, Double>> joinedRdd = rdd1.join(rdd2).sortByKey();
-        joinedRdd.saveAsTextFile(output);
-    }
-
 }

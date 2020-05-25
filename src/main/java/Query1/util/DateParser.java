@@ -19,8 +19,4 @@ public class DateParser {
         return dateTime;
     }
 
-    public static Date dateParser(String date) throws ParseException {
-        Date myDate =new SimpleDateFormat("MM/dd/yyyy").parse(date);
-        return myDate;
-    }
 }
