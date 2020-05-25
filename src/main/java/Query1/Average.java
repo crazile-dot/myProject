@@ -1,6 +1,6 @@
 package Query1;
 
-import Query1.utils.DayIta;
+import Query1.util.DayIta;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.function.PairFunction;
 import org.joda.time.DateTime;

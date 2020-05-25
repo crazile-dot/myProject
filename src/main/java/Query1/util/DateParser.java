@@ -1,4 +1,4 @@
-package util;
+package Query1.util;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;

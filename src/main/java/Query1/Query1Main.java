@@ -1,7 +1,7 @@
 package Query1;
 
-import Query1.utils.DayIta;
-import Query1.utils.Query1CsvParser;
+import Query1.util.DayIta;
+import Query1.util.Query1CsvParser;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
@@ -13,7 +13,7 @@ public class Query1Main {
 
     private final static int weekLength = 7;
     private final static String pathToFile = "data/dpc-covid19-ita-andamento-nazionale.csv";
-    private final static String outputFile = "src/main/java/Query1/Results/query1_output.csv";
+    private final static String outputFile = "src/main/java/Results/query1_output.csv";
 
     public static void main (String[] args) {
 

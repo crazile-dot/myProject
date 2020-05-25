@@ -1,9 +1,8 @@
-package Query1.utils;
+package Query1.util;
 
 import org.apache.spark.api.java.JavaPairRDD;
 import org.joda.time.DateTime;
 import scala.Tuple2;
-import util.DateParser;
 
 public class Query1CsvParser {
 

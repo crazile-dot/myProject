@@ -1,8 +1,9 @@
 package Query2.util;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Continent {
+public class Continent implements Serializable {
 
     private String continent;
     private ArrayList<Integer> values;

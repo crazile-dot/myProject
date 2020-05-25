@@ -1,4 +1,4 @@
-package Query1.utils;
+package Query1.util;
 
 import org.joda.time.DateTime;
 import java.io.Serializable;
