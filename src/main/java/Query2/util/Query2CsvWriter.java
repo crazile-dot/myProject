@@ -59,6 +59,9 @@ public class Query2CsvWriter {
     public static void writeCsv(List<Tuple2<String, ArrayList<Tuple2<String, Tuple4<Double, Double, Integer, Integer>>>>> l, String output) throws IOException{
 
         BufferedWriter writer = new BufferedWriter(new FileWriter(output));
+        writer.append("continent").append(CSV_SEPARATOR).append("week").append(CSV_SEPARATOR).append("mean")
+                .append(CSV_SEPARATOR).append("standard_deviation").append(CSV_SEPARATOR).append("min")
+                .append(CSV_SEPARATOR).append("max").append(System.lineSeparator());
         l.forEach(t -> {
             try {
                 for (int i = 0; i < t._2().size(); i++) {

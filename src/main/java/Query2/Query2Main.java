@@ -1,9 +1,7 @@
 package Query2;
 
-import Query2.util.Query2CsvParser;
 import Query2.util.Query2CsvWriter;
 import Query2.util.State;
-import Query2.util.Statistics;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;

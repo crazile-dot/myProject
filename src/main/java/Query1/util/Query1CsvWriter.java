@@ -3,12 +3,10 @@ package Query1.util;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.joda.time.DateTime;
 import scala.Tuple2;
-import scala.Tuple4;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Query1CsvWriter {
@@ -24,6 +22,8 @@ public class Query1CsvWriter {
 
     public static void writeCsv(List<Tuple2<DateTime, Tuple2<Double, Double>>> l, String output) throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter(output));
+        writer.append("data").append(CSV_SEPARATOR).append("dimessi_guariti").append(CSV_SEPARATOR)
+                .append("tamponi").append(System.lineSeparator());
         l.forEach(t -> {
             try {
                 writer.append(t._1().toString()).append(CSV_SEPARATOR)

@@ -1,5 +1,8 @@
-package Query2.util;
+package Query2;
 
+import Query2.util.Continent;
+import Query2.util.Query2CsvParser;
+import Query2.util.State;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.function.Function;
