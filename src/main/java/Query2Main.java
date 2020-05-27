@@ -1,5 +1,6 @@
-package Query2;
-
+import Query2.Query2Preprocessing;
+import Query2.Statistics;
+import Query2.TrendCompute;
 import Query2.util.Query2CsvWriter;
 import Query2.util.State;
 import org.apache.spark.SparkConf;
@@ -15,13 +16,13 @@ import java.util.*;
 public class Query2Main {
 
     private final static int weekLength = 7;
-    private final static String pathToFile = "data/time_series_covid19_confirmed_global.csv";
+    //s3://mysabdbucketemraws
+    private final static String pathToFile = "s3://mysabdbucketemraws/time_series_covid19_confirmed_global.csv";
     private final static String output = "src/main/java/Results/query2_output.csv";
 
     public static void main(String[] args) {
 
         SparkConf conf = new SparkConf()
-                .setMaster("local")
                 .setAppName("Query 2");
         JavaSparkContext sc = new JavaSparkContext(conf);
         sc.setLogLevel("ERROR");
@@ -44,9 +45,7 @@ public class Query2Main {
             io.printStackTrace();
             System.out.println("Errore del file");
         }
-        /*meanRdd.saveAsTextFile(output);
-        standardDeviationRdd.saveAsTextFile(output2);
-        minMaxRdd.saveAsTextFile(output3);*/
+
         sc.close();
         System.out.println("Time query2: " + (System.currentTimeMillis() - start) + "ms");
 

@@ -1,5 +1,5 @@
-package Query1;
-
+import Query1.Average;
+import Query1.Query1Preprocessing;
 import Query1.util.DayIta;
 import Query1.util.Query1CsvParser;
 import Query1.util.Query1CsvWriter;
@@ -7,6 +7,7 @@ import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
+import org.apache.spark.sql.SparkSession;
 import org.joda.time.DateTime;
 import scala.Tuple2;
 
@@ -15,13 +16,13 @@ import java.io.IOException;
 public class Query1Main {
 
     private final static int weekLength = 7;
-    private final static String pathToFile = "data/dpc-covid19-ita-andamento-nazionale.csv";
+    //s3://mysabdbucketemraws
+    private final static String pathToFile = "s3://mysabdbucketemraws/dpc-covid19-ita-andamento-nazionale.csv";
     private final static String outputFile = "src/main/java/Results/query1_output.csv";
 
     public static void main (String[] args) {
 
         SparkConf conf = new SparkConf()
-                .setMaster("local")
                 .setAppName("Query 1");
         JavaSparkContext sc = new JavaSparkContext(conf);
         sc.setLogLevel("ERROR");
